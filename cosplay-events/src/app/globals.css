@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+@import "tailwindcss";
+
+/*----------------------------------------------------------
+  THEME VARIABLES
+----------------------------------------------------------*/
+:root {
+  /* Cosevent Theme Colors - Cosgear-inspired */
+  --cosevent-bg: linear-gradient(135deg, #0c081a 30%, #3f1e3c 70%);  /* blue to purple gradient */
+  --cosevent-post-bg: linear-gradient(135deg, #0c081a, #3f1e3c); /* blue to purple gradient */
+  --cosevent-yellow: #ffc700; /* keep yellow buttons */
+  --cosevent-darkblue: #1b1f3a; /* navbar & hero section background */
+  --cosevent-white: #ffffff;
+  --cosevent-lightblue: #92c5ff; /* light blue for text */
+  --cosevent-navblue: #00010b; /* navbar hover or base */
+  --cosevent-purple: #6f46bb; /* Cosgear purple tone */
+  --cosevent-magenta: #a41c5c; /* accent magenta */
+  --discord-blue: #5865F2;
+
+  /* Input & Button Colors */
+  --button-inactive: #3d3f5c;
+
+  /* Font Family */
+  --font-primary: 'Open Sans', sans-serif;
+}
+
+/*----------------------------------------------------------
+  GLOBAL STRUCTURE
+----------------------------------------------------------*/
+body {
+  background: var(--cosevent-bg); /* ← changed to use gradient */
+  color: var(--cosevent-white);
+  font-family: var(--font-primary);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+nav {
+  background-color: var(--cosevent-navblue) !important;
+  color: inherit;
+  padding: 4px 12px;
+  height: 45px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  font-family: var(--font-primary);
+}
+
+footer {
+  background-color: var(--cosevent-bg);
+  color: inherit;
+  padding: 12px 16px;
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+  font-family: var(--font-primary);
+}
+
+.blurred-overlay {
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/*----------------------------------------------------------
+  TYPOGRAPHY
+----------------------------------------------------------*/
+h1 {
+  color: var(--cosevent-magenta);
+  font-family: var(--font-primary);
+}
+h2 {
+  color: var(--cosevent-yellow);
+  font-family: var(--font-primary);
+}
+h3 {
+  color: var(--cosevent-white);
+  font-family: var(--font-primary);
+}
+p {
+  color: var(--cosevent-lightblue);
+  font-family: var(--font-primary);
+}
+
+/*----------------------------------------------------------
+  INPUTS & BUTTONS
+----------------------------------------------------------*/
+.input-field {
+  background-color: var(--cosevent-purple);
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  width: 100%;
+}
+
+.input-field::placeholder {
+  color: var(--placeholder-color);
+  opacity: 1;
+}
+
+.btn-primary {
+  background-color: var(--cosevent-yellow);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+  font-family: var(--font-primary);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn-secondary {
+  background-color: var(--cosevent-purple);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+  font-family: var(--font-primary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--cosevent-magenta);
+}
+
+.btn-inactive {
+  background-color: var(--button-inactive);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+  font-family: var(--font-primary);
+}
+
+.btn-inactive:hover {
+  filter: brightness(1.1);
+}
+
+/*----------------------------------------------------------
+  BOX COMPONENTS
+----------------------------------------------------------*/
+.box {
+  background-color: var(--cosevent-post-bg);
+  border-radius: 0px;
+  padding: 16px;
+  font-family: var(--font-primary);
+}
+
+.box.has-link {
+  transition: transform 0.2s ease-in-out;
+}
+
+.box.has-link:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+}
+
+:root {
+  --placeholder-color: #0c081a;
+}

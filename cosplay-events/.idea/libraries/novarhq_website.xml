@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="cosevent_website">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src.zip!/" />
+      <root url="jar://$PROJECT_DIR$/src (2).zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
