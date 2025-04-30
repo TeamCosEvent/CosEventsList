@@ -16,9 +16,9 @@ export default function ManualCrawler() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-[var(--cosevent-bg)] text-white px-4 py-16 font-sans">
+    <main className="flex flex-col items-center justify-center min-h-screen bg-[var(--novar-bg)] text-white px-4 py-16 font-sans">
       <div className="w-full max-w-3xl">
-        <h2 className="text-4xl font-bold text-[var(--cosevent-yellow)] mb-6">
+        <h2 className="text-4xl font-bold text-[var(--novar-yellow)] mb-6">
           Manuell crawler 
         </h2>
 
@@ -34,7 +34,7 @@ export default function ManualCrawler() {
         </button>
 
         {status && (
-          <p className="mt-6 text-white font-mono bg-black/20 p-4 rounded whitespace-pre-wrap">
+          <p className="p-4 mt-6 font-mono text-white whitespace-pre-wrap rounded bg-black/20">
             {status}
           </p>
         )}

@@ -10,12 +10,13 @@ import {
 } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 
-// Define a strict NotificationItem type
 type NotificationItem = {
   id: string;
-  type: "newsletter" | "commission" | "collaboration" | "form";
+  type: "newsletter" | "commission" | "collaboration" | "form" | "event";
   name?: string;
   email?: string;
+  title?: string;
+  location?: string;
   timestamp?: Timestamp;
 };
 
@@ -39,20 +40,27 @@ export const useRealtimeNotifications = () => {
       orderBy("timestamp", "desc")
     );
 
+    const newEventsQuery = query(
+      collection(db, "conventions"),
+      where("isNew", "==", true),
+      orderBy("createdAt", "desc")
+    );
+
     let newsletterData: NotificationItem[] = [];
     let formsData: NotificationItem[] = [];
+    let eventsData: NotificationItem[] = [];
 
     const updateCombined = () => {
-      const combined = [...newsletterData, ...formsData];
+      const combined = [...newsletterData, ...formsData, ...eventsData];
       combined.sort((a, b) => {
         const timeA = a.timestamp?.toMillis?.() ?? 0;
         const timeB = b.timestamp?.toMillis?.() ?? 0;
-        return timeB - timeA; // Newest first
+        return timeB - timeA;
       });
       setNotifications(combined);
     };
 
-    const unsubscribeNewsletter = onSnapshot(newsletterQuery, (snapshot) => {
+    const unsubNewsletter = onSnapshot(newsletterQuery, (snapshot) => {
       newsletterData = snapshot.docs.map((doc) => {
         const data = doc.data() as DocumentData;
         return {
@@ -65,7 +73,7 @@ export const useRealtimeNotifications = () => {
       updateCombined();
     });
 
-    const unsubscribeForms = onSnapshot(formsQuery, (snapshot) => {
+    const unsubForms = onSnapshot(formsQuery, (snapshot) => {
       formsData = snapshot.docs.map((doc) => {
         const data = doc.data() as DocumentData;
         return {
@@ -79,9 +87,24 @@ export const useRealtimeNotifications = () => {
       updateCombined();
     });
 
+    const unsubEvents = onSnapshot(newEventsQuery, (snapshot) => {
+      eventsData = snapshot.docs.map((doc) => {
+        const data = doc.data() as DocumentData;
+        return {
+          type: "event",
+          id: doc.id,
+          title: data.title,
+          location: data.location,
+          timestamp: data.createdAt,
+        };
+      });
+      updateCombined();
+    });
+
     return () => {
-      unsubscribeNewsletter();
-      unsubscribeForms();
+      unsubNewsletter();
+      unsubForms();
+      unsubEvents();
     };
   }, []);
 
