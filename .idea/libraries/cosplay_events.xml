@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="cosplay-events">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/cosplay-events/src.zip!/" />
+      <root url="jar://$PROJECT_DIR$/cosplay-events/src (2).zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
