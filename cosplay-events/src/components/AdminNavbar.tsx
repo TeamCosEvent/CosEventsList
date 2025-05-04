@@ -12,7 +12,7 @@ export default function AdminNavbar() {
     <nav className="bg-[var(--cosevent-darkblue)] text-white py-3 px-6 fixed top-0 w-full z-40 shadow-md flex items-center justify-between">
       {/* cosevent banner - Links to Admin Page */}
       <Link href="/admin" className="flex items-center">
-        <Image src="/cosevent-banner.png" alt="cosevent Banner" width={150} height={40} />
+        <Image src="/cosgear-bannerNEW.png" alt="cosevent Banner" width={150} height={40} />
       </Link>
 
       {/* Desktop Menu */}
@@ -21,9 +21,9 @@ export default function AdminNavbar() {
           Dashboard
         </Link>
         <Link href="/admin/crawl" className={`nav-link ${pathname === "/admin/forms" ? "active" : ""}`}>
-          Crawler
+         Crawler
         </Link>
-        <Link href="/admin/conventions" className={`nav-link ${pathname === "/admin" ? "active" : ""}`}>
+        <Link href="/admin/conventionlist" className={`nav-link ${pathname === "/admin" ? "active" : ""}`}>
           Conventions
         </Link>
         <Link href="/" className={`nav-link ${pathname === "/" ? "active" : ""}`}>
@@ -42,10 +42,10 @@ export default function AdminNavbar() {
           <Link href="/admin" className={`nav-link ${pathname === "/admin" ? "active" : ""}`}>
           Dashboard
           </Link>
-          <Link href="/admin/crawler" className={`nav-link ${pathname === "/admin/forms" ? "active" : ""}`}>
-            Crawler
+          <Link href="/admin/crawl" className={`nav-link ${pathname === "/admin/forms" ? "active" : ""}`}>
+           Crawler
           </Link>
-          <Link href="/admin/conventions" className={`nav-link ${pathname === "/admin" ? "active" : ""}`}>
+          <Link href="/admin/conventionlist" className={`nav-link ${pathname === "/admin" ? "active" : ""}`}>
             Conventions
           </Link>
           <Link href="/" className={`nav-link ${pathname === "/" ? "active" : ""}`}>

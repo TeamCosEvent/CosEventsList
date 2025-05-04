@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import puppeteer from 'puppeteer';
 import { db } from '../../../firebase/firebaseConfig';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,7 +10,6 @@ export async function GET() {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto('https://www.magicon.no/community/', { waitUntil: 'networkidle2' });
-
     await page.waitForSelector('li.av-milestone', { timeout: 5000 });
 
     const events = await page.evaluate(() => {
@@ -39,23 +38,37 @@ export async function GET() {
       });
     });
 
-    console.log('📦 EVENTS:', events);
+    let addedCount = 0;
 
     for (const event of events) {
-      await setDoc(doc(db, 'conventions', event.id), event);
+      const ref = doc(db, 'conventions', event.id);
+      const existing = await getDoc(ref);
+
+      if (!existing.exists()) {
+        await setDoc(ref, {
+          ...event,
+          isVisible: true,
+          isNew: true,
+          createdAt: serverTimestamp(),
+          source: 'magicon',
+        });
+        addedCount++;
+      } else {
+        // Beholder isVisible og andre admin-felter
+        await setDoc(ref, {
+          ...event,
+          updatedAt: serverTimestamp(),
+        }, { merge: true });
+      }
     }
 
     await browser.close();
-
-    return NextResponse.json({ message: 'Crawler kjørt og data lagret', events });
+    return NextResponse.json({ message: `Crawler ferdig. ${addedCount} nye events lagt til.` });
   } catch (error) {
     const err = error instanceof Error ? error : new Error(String(error));
-    console.error('❌ Crawler-feil:', err.stack || err.message);
+    console.error('Crawler-feil:', err.stack || err.message);
     return NextResponse.json(
-      {
-        message: 'Feil under crawling',
-        error: err.message,
-      },
+      { message: 'Feil under crawling', error: err.message },
       { status: 500 }
     );
   }

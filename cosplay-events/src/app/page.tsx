@@ -27,8 +27,23 @@ export default function ConventionsPage() {
     async function fetchConventions() {
       try {
         const snapshot = await getDocs(collection(db, 'conventions'));
-        const docs = snapshot.docs.map(doc => doc.data() as Event);
-        const sorted = docs.sort((a, b) => parseDate(a.date) - parseDate(b.date));
+
+        const docs = snapshot.docs.map((doc) => {
+          const raw = doc.data() as Omit<Event, 'id'>;
+          return {
+            id: doc.id,
+            ...raw,
+          };
+        });
+
+        const visibleOnly = docs.filter((event) => {
+          const isVisible = event.isVisible !== false;
+          const eventTime = parseDate(event.date);
+          const now = Date.now();
+          return isVisible && eventTime >= now;
+        });
+                const sorted = visibleOnly.sort((a, b) => parseDate(a.date) - parseDate(b.date));
+
         setEvents(sorted);
       } catch (err) {
         console.error("Kunne ikke hente eventer:", err);

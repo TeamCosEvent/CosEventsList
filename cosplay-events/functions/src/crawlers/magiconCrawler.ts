@@ -4,7 +4,7 @@ import * as admin from 'firebase-admin';
 const db = admin.firestore();
 
 export async function crawlMagiconEvents() {
-  const browser = await puppeteer.launch({ headless: 'new' });
+  const browser = await puppeteer.launch(); 
   const page = await browser.newPage();
   await page.goto('https://www.magicon.no/community/', { waitUntil: 'networkidle2' });
   await page.waitForSelector('li.av-milestone', { timeout: 5000 });
@@ -35,6 +35,7 @@ export async function crawlMagiconEvents() {
         link,
         source: "magicon",
         isNew: true,
+        isVisible: true,
       };
     });
   });
@@ -42,11 +43,19 @@ export async function crawlMagiconEvents() {
   for (const event of events) {
     const ref = db.collection('conventions').doc(event.id);
     const doc = await ref.get();
+
     if (!doc.exists) {
+      // Nytt dokument
       await ref.set({
         ...event,
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
       });
+    } else {
+      // Oppdater eksisterende dokument, men bevar admin-felter som notes, isVisible osv.
+      await ref.set({
+        ...event,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      }, { merge: true });
     }
   }
 

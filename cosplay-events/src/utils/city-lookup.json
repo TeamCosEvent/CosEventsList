@@ -1,0 +1,42 @@
+{
+  "bergen": {
+    "country": "Norway",
+    "continent": "Europe"
+  },
+  "oslo": {
+    "country": "Norway",
+    "continent": "Europe"
+  },
+  "stockholm": {
+    "country": "Sweden",
+    "continent": "Europe"
+  },
+  "helsinki": {
+    "country": "Finland",
+    "continent": "Europe"
+  },
+  "copenhagen": {
+    "country": "Denmark",
+    "continent": "Europe"
+  },
+  "reykjavik": {
+    "country": "Iceland",
+    "continent": "Europe"
+  },
+  "berlin": {
+    "country": "Germany",
+    "continent": "Europe"
+  },
+  "paris": {
+    "country": "France",
+    "continent": "Europe"
+  },
+  "tokyo": {
+    "country": "Japan",
+    "continent": "Asia"
+  },
+  "seoul": {
+    "country": "South Korea",
+    "continent": "Asia"
+  }
+}

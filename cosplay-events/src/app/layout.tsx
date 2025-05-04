@@ -2,6 +2,7 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import NavbarSwitcher from "@/components/NavbarSwitcher";
 import BackToTopButton from "@/components/BackToTopButton";
+
 export const metadata = {
   title: "CosEvents",
   description: "Bring it to life",

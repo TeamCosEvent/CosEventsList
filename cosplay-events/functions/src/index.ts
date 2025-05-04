@@ -1,18 +1,13 @@
-import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-import { crawlMagiconEvents } from './crawlers/magiconCrawler';
+import { onRequest } from "firebase-functions/v2/https";
+import { crawlMagiconEvents } from "./crawlers/magiconCrawler";
 
-admin.initializeApp();
-
-// Manuell trigger fra admin
-export const runCrawlers = functions.https.onCall(async () => {
-  const count = await crawlMagiconEvents();
-  return { message: `Fant ${count} nye events.` };
+export const magiconCrawl = onRequest(async (req, res) => {
+  try {
+    const addedCount = await crawlMagiconEvents();
+    res.status(200).send(`Crawler ferdig. ${addedCount} nye events lagt til.`);
+  } catch (error) {
+    const err = error instanceof Error ? error : new Error(String(error));
+    console.error("Crawler-feil:", err.stack || err.message);
+    res.status(500).send(`Feil under crawling: ${err.message}`);
+  }
 });
-
-// Automatisk cron-kjøring
-export const scheduledCrawlers = functions.pubsub
-  .schedule('every 12 hours')
-  .onRun(async () => {
-    return await crawlMagiconEvents();
-  });
