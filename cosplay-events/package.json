@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google-cloud/storage": "^5.8.0",
     "dotenv": "^16.4.7",
     "firebase": "^11.4.0",
     "firebase-admin": "^13.2.0",
@@ -32,6 +33,6 @@
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5.8.3"
   }
 }
